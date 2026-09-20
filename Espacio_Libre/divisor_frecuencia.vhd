@@ -12,7 +12,7 @@ entity divisor_frecuencia is
     port (
         clk      : in  STD_LOGIC;
         reset    : in  STD_LOGIC;
-        pulso_1s : out STD_LOGIC
+        pulso_1s : out STD_LOGIC -- Representa los flancos de subida del clk 
     );
 end divisor_frecuencia;
 
@@ -37,7 +37,8 @@ begin
                 contador <= 0;
                 pulso_1s <= '1'; -- Disparamos la señal
             else
-                contador <= contador + 1;
+                -- Este codigo tiene la funcionalidad de que si el contador no ha llegado a 49999999 se le sume 1 y el pulso siga en 0
+					 contador <= contador + 1;
                 pulso_1s <= '0'; -- Mantenemos apagado
             end if;
         end if;
