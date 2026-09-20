@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 -- Usamos NUMERIC_STD porque es el estándar moderno y más óptimo para matemáticas
 use IEEE.NUMERIC_STD.ALL; 
 
-entity divisor_1Hz is
+entity divisor_frecuencia is
     generic (
         -- Esto hace que el código sea reutilizable. 
         -- Si tu FPGA es de 50MHz, cuenta hasta 50,000,000 para lograr 1 segundo.
@@ -14,9 +14,9 @@ entity divisor_1Hz is
         reset    : in  STD_LOGIC;
         pulso_1s : out STD_LOGIC
     );
-end divisor_1Hz;
+end divisor_frecuencia;
 
-architecture comportamental of divisor_1Hz is
+architecture comportamental of divisor_frecuencia is
     -- OPTIMIZACIÓN 1: Restringimos el rango del integer. 
     -- Si no ponemos el "range", Quartus gasta 32 Flip-Flops. 
     -- Al ponerle el límite, Quartus calcula matemáticamente y usa solo 26 Flip-Flops.
