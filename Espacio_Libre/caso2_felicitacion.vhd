@@ -50,7 +50,7 @@ begin
 					cuenta_35 <= 0;
 					felicitacion_reg <= '0';
 					
-				elsif pulso_1s = '1' and cuenta_35 < 35 then
+				elsif sensor_presencia = '1' and pulso_1s = '1' and cuenta_35 < 35 then
 					cuenta_35 <= cuenta_35 + 1;
 				
 				end if;
