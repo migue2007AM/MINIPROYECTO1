@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
--- Usamos NUMERIC_STD porque es el estándar moderno y más óptimo para matemáticas
-use IEEE.NUMERIC_STD.ALL; 
+use IEEE.STD_LOGIC_UNSIGNED.ALL; 
+use IEEE.STD_LOGIC_ARITH.ALL;
 
 entity divisor_frecuencia is
     generic (
