@@ -20,7 +20,7 @@ package espacio_libre_pkg is
 				
 	END COMPONENT;
 	
-	COMPONENT caso_felicitacion is 
+	COMPONENT caso2_felicitacion is 
 		
 			PORT(
 					clk              : in  STD_LOGIC;
@@ -49,3 +49,24 @@ package espacio_libre_pkg is
 					);
 			 
 	END COMPONENT;
+	
+	COMPONENT DEC_BCD is
+	
+			PORT(
+					port(x: in  STD_LOGIC_VECTOR (9 downto 0);
+					y: out STD_LOGIC_VECTOR(3 downto 0)
+					);
+					
+	END COMPONENT;
+	
+	COMPONENT BCD_7SEG is 
+	
+			PORT(
+					A: in STD_LOGIC_VECTOR(3 downto 0);
+					B: out STD_LOGIC_VECTOR(6 downto 0)
+					);
+					
+	END COMPONENT;
+	
+			
+		
