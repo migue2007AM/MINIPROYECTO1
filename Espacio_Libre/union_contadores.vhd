@@ -75,7 +75,7 @@ architecture conteo of union_contadores is
 								reset 	 => reset,
 								enable 	 => carry_cen,
 								
-								carry_out => open, --salida vacia
+								carry_out => open, --asignacion vacia
 								cuenta 	 => miles
 								);
 					
