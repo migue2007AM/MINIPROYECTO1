@@ -20,34 +20,36 @@ end entity;
 architecture behavorial of contador_individual is 
 
 			signal cuenta_s : integer range 0 to 9 := 0;
-			signal carry    : STD_LOGIC := 0;
+			
+		begin
 			
 			process(clk, reset)
 			
-			begin
+				begin
 			
-				if reset = '1' then
-					cuenta_s <= '0';
-				
-				elsif rising_edge(clk) and enable = 1 then
+					if reset = '1' then
+						cuenta_s <= 0;
 					
-					if cuenta_s = 9 then
-						cuenta_s <= '0';
-						carry    <= '1';
-					
-					else 
-						cuenta_s <= cuenta_s + 1;
+					elsif rising_edge(clk) and enable = '1' then
+						
+						if cuenta_s = 9 then
+							cuenta_s <= 0;
+						
+						else 
+							cuenta_s <= cuenta_s + 1;
+						
+						end if;
 					
 					end if;
 				
-				end if;
-				
-			end process;
+			 end process;
+			 
+		 carry_out <= '1' when(cuenta_s = 9 and enable = '1') else '0';
+		 cuenta    <= cuenta_s;
 	
 end behavorial;
 
-carry_out <= carry;
-cuenta    <= cuenta_s;
+
 			
 			
 			
