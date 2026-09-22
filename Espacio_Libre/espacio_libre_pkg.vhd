@@ -53,7 +53,7 @@ package espacio_libre_pkg is
 	COMPONENT DEC_BCD is
 	
 			PORT(
-					port(x: in  STD_LOGIC_VECTOR (9 downto 0);
+					x: in  STD_LOGIC_VECTOR (9 downto 0);
 					y: out STD_LOGIC_VECTOR(3 downto 0)
 					);
 					
