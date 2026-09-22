@@ -68,5 +68,17 @@ package espacio_libre_pkg is
 					
 	END COMPONENT;
 	
+	COMPONENT union_contadores is
+	
+			PORT(
+					clk      : in STD_LOGIC;
+					reset    : in STD_LOGIC;
+					enable   : in STD_LOGIC;
+				
+					unidades : out integer range 0 to 9;
+					decenas  : out integer range 0 to 9;
+					centenas : out integer range 0 to 9;
+					miles 	: out integer range 0 to 9
+					);
 			
-		
+	END COMPONENT;
