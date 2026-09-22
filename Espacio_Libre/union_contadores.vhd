@@ -21,13 +21,65 @@ end entity;
 
 architecture conteo of union_contadores is
 
-		signal uni : integer range 0 to 9;
-		signal dec : integer range 0 to 9;
-		signal cen : integer range 0 to 9;
-		signal mil : integer range 0 to 9;
+		signal carry_uni : STD_LOGIC;
+		signal carry_dec : STD_LOGIC;
+		signal carry_cen : STD_LOGIC;
+		
+		COMPONENT contador_individual is
+		
+			port(
+					clk       : in STD_LOGIC;
+					reset     : in STD_LOGIC;	-- '1' para activo, '0' para desactivado
+					enable 	 : in STD_LOGIC;
+			
+					carry_out : out STD_LOGIC;	
+					cuenta 	 : out integer range 0 to 9
+					);
+						
+		end COMPONENT;
 		
 		begin
-				process(clk,reset)
+				U_UNIDADES : contador_individual 
+					port map(
+								clk 		 => clk,
+								reset 	 => reset,
+								enable 	 => enable,
+								
+								carry_out => carry_uni,
+								cuenta    => unidades
+								);
 				
-				begin
+				U_DECIMAS : contador_individual
+					port map(
+								clk       => clk,
+								reset 	 => reset,
+								enable 	 => carry_uni,
+								
+								carry_out => carry_dec,
+								cuenta 	 => decimas
+								);
+								
+				U_CENTENAS : contador_individual
+					port map(
+								clk       => clk,
+								reset     => reset,
+								enable 	 => carry_dec,
+								
+								carry_out => carry_cen,
+								cuenta 	 => centenas
+								);
+								
+				U_MILESIMAS : contador_individual
+					port map(
+								clk       => clk,
+								reset 	 => reset,
+								enable 	 => carry_cen,
+								
+								carry_out => open, --salida vacia
+								cuenta 	 => miles
+								);
+					
+end conteo;
+
+
 					
