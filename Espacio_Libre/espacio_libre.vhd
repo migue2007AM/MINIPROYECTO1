@@ -5,9 +5,6 @@ USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY espacio_libre is
-	GENERIC(
-				freq_fpga : integer := 50000000
-				);
 	
 	PORT(
 	
@@ -28,21 +25,38 @@ architecture procedimiento of espacio_libre is
 			SIGNAL clk_1HZ		   : STD_LOGIC := '0';
 			SIGNAL s_unidades    : INTEGER range 0 to 9;
 			SIGNAL s_decenas     : INTEGER range 0 to 9;
-			SIGNAL s_centenas    : INTEGER range 0 to 9;
-			SIGNAL s_miles 	   : INTEGER range 0 to 9;
 			SIGNAL dec_unidades  : STD_LOGIC_VECTOR (3 downto 0);
 			SIGNAL dec_decenas   : STD_LOGIC_VECTOR (3 downto 0);
 			SIGNAL s_conteobase  : INTEGER range 0 to 35;
-			SIGNAL s_conteoextra : INTEGER range 0 to 999;
+			SIGNAL s_conteoextra : INTEGER range 0 to 99;
 			
 			U_divisor_frecuencia : divisor_frecuencia
 					GENERIC MAP(
-									F_RELOJ => freq_fpga
+									FININ => 50000000,
+									FOUT => 1
 									);
 					
 					PORT MAP(
-								clk => clk_fpga,
+								clk_in => clk_fpga,
 								reset => btn_reset,
-								pulso_1s => clk_1HZ
+								clk_out => clk_1HZ
+							);
+							
+			U_dos_casos : dos_casos
+					PORT MAP(
+								clk => clk_1HZ,
+								reset => btn_reset,
+								sensor_presencia => sensor,
+								led_alarma => led_alarma,
+								led_felicitacion => led_felicitacion,
+								conteo_base => s_conteobase,
+								conteo_extra => s_conteoextra
+							);
+							
+			U_union_contadores : union_contadores
+					PORT MAP(
+								clk => clk_1HZ,
+								reset => btn_reset,
+								
 								
 			
