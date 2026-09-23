@@ -1,46 +1,59 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL; 
-use IEEE.STD_LOGIC_ARITH.ALL;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity divisor_frecuencia is
-    generic (
-        -- Esto hace que el código sea reutilizable. 
-        -- Si tu FPGA es de 50MHz, cuenta hasta 50,000,000 para lograr 1 segundo.
-        F_RELOJ : integer := 50000000 
-    );
-    port (
-        clk      : in  STD_LOGIC;
-        reset    : in  STD_LOGIC;
-        pulso_1s : out STD_LOGIC -- Representa los flancos de subida del clk 
-    );
-end divisor_frecuencia;
+ENTITY divisor_frecuencia IS
 
-architecture comportamental of divisor_frecuencia is
-    -- OPTIMIZACIÓN 1: Restringimos el rango del integer. 
-    -- Si no ponemos el "range", Quartus gasta 32 Flip-Flops. 
-    -- Al ponerle el límite, Quartus calcula matemáticamente y usa solo 26 Flip-Flops.
-    signal contador : integer range 0 to F_RELOJ - 1 := 0;
-begin
-    -- El process "despierta" solo con el reloj o el botón de reset
-    process(clk, reset)
-    begin
-        -- OPTIMIZACIÓN 2: El 'if' aquí es obligatorio porque el RESET debe 
-        -- tener prioridad física absoluta sobre todo el circuito.
-        if reset = '1' then
+    GENERIC (
+        FININ : INTEGER := 50000000; -- Frecuencia del oscilador de la FPGA (50 MHz)
+        FOUT  : INTEGER := 1         -- Frecuencia deseada para el conteo (1 Hz)
+    );
+
+    PORT (
+        clk_in  : IN STD_LOGIC;      -- Entra el reloj rápido de 50 MHz
+        reset   : IN STD_LOGIC;      -- Reset síncrono/asíncrono
+        clk_out : OUT STD_LOGIC      -- Sale la señal dividida de 1 Hz
+    );
+
+END ENTITY divisor_frecuencia;
+
+
+ARCHITECTURE Behavioral OF divisor_frecuencia IS
+
+    CONSTANT LIMITE : INTEGER := (FININ / (2 * FOUT)) - 1;
+
+    SIGNAL contador : INTEGER RANGE 0 TO LIMITE := 0;
+    SIGNAL clk_aux  : STD_LOGIC := '0';
+
+BEGIN
+
+    PROCESS(clk_in, reset)
+
+    BEGIN
+
+        IF reset = '1' THEN
+
             contador <= 0;
-            pulso_1s <= '0';
-            
-        elsif rising_edge(clk) then
-            -- Cuando llegamos al límite (ha pasado 1 segundo real)
-            if contador = F_RELOJ - 1 then
+            clk_aux <= '0';
+
+        ELSIF rising_edge(clk_in) THEN
+
+            IF contador = LIMITE THEN
+
                 contador <= 0;
-                pulso_1s <= '1'; -- Disparamos la señal
-            else
-                -- Este codigo tiene la funcionalidad de que si el contador no ha llegado a 49999999 se le sume 1 y el pulso siga en 0
-					 contador <= contador + 1;
-                pulso_1s <= '0'; -- Mantenemos apagado
-            end if;
-        end if;
-    end process;
-end comportamental;
+                clk_aux <= NOT clk_aux;
+
+            ELSE
+
+                contador <= contador + 1;
+
+            END IF;
+
+        END IF;
+
+    END PROCESS;
+
+
+    clk_out <= clk_aux;
+
+END ARCHITECTURE Behavioral;
