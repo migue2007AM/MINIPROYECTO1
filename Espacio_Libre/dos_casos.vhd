@@ -19,7 +19,7 @@ entity dos_casos is
 				
 			);
 			
-END dos_casos;
+END ENTITY;
 
 architecture mixta of dos_casos is
     
