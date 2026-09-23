@@ -48,17 +48,15 @@ begin
             
 				-- Esto se hace para despues comparar la presencia inicial
 				sensor_anterior <= sensor_presencia; 
-				
-            -- Si el espacio está libre, mantenemos todo apagado/en cero
-            if sensor_presencia = '0' then
-                cuenta_35 <= 0;
-                cuenta_ex <= 0;
 					 
-				elsif sensor_anterior = '1' and sensor_presencia = '0' then
+				if sensor_anterior = '1' and sensor_presencia = '0' then
 						felicitacion_reg <= '1';
+						cuenta_35 <= 0;
+						cuenta_ex <= 0;
 						
 				elsif sensor_anterior = '0' and sensor_presencia = '1' then
 						cuenta_35 <= 0;
+						cuenta_ex <= 0;
 						felicitacion_reg <= '0';
                 
             elsif  sensor_presencia = '1' then
@@ -71,6 +69,11 @@ begin
                 else
                     cuenta_ex <= cuenta_ex + 1;
                 end if;
+					 
+				-- Si el espacio está libre, mantenemos todo apagado/en cero
+            elsif sensor_presencia = '0' then
+                cuenta_35 <= 0;
+                cuenta_ex <= 0;
                 
             end if;
         end if;
