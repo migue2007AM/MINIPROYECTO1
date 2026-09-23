@@ -59,7 +59,11 @@ package espacio_libre_pkg is
 				led_alarma 		  : OUT STD_LOGIC;
 				led_felicitacion : OUT STD_LOGIC;
 				conteo_base 	  : OUT integer range 0 to 35;
-				conteo_extra 	  : OUT integer range 0 to 99
+				conteo_extra 	  : OUT integer range 0 to 99;
+				unidades_base    : OUT STD_LOGIC_VECTOR (3 downto 0);
+				decenas_base     : OUT STD_LOGIC_VECTOR (3 downto 0);
+				unidades_extra   : OUT STD_LOGIC_VECTOR (3 downto 0);
+				decenas_extra    : OUT STD_LOGIC_VECTOR (3 downto 0)
 				
 			);
 			
