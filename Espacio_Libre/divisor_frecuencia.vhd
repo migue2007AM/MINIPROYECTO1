@@ -15,7 +15,7 @@ ENTITY divisor_frecuencia IS
         clk_out : OUT STD_LOGIC      -- Sale la señal dividida de 1 Hz
     );
 
-END ENTITY divisor_frecuencia;
+END ENTITY;
 
 
 ARCHITECTURE Behavioral OF divisor_frecuencia IS
@@ -56,4 +56,4 @@ BEGIN
 
     clk_out <= clk_aux;
 
-END ARCHITECTURE Behavioral;
+END Behavioral;
