@@ -8,27 +8,33 @@ ENTITY espacio_libre is
 	
 	PORT(
 	
-			clk_fpga 		  : IN STD_LOGIC;
-			btn_reset 		  : IN STD_LOGIC;
-			sensor 			  : IN STD_LOGIC;
+			clk_fpga 		   : IN STD_LOGIC;
+			btn_reset 		   : IN STD_LOGIC;
+			sensor 			   : IN STD_LOGIC;
 			
-			led_alarma 		  : OUT STD_LOGIC;
-			led_felicitacion : OUT STD_LOGIC;
-			disp_unidades    : OUT STD_LOGIC_VECTOR (6 downto 0);
-			disp_decenas 	  : OUT STD_LOGIC_VECTOR (6 downto 0)
+			led_alarma 		   : OUT STD_LOGIC;
+			led_felicitacion  : OUT STD_LOGIC;
+			disp_unidadesb    : OUT STD_LOGIC_VECTOR (6 downto 0);
+			disp_decenasb 	   : OUT STD_LOGIC_VECTOR (6 downto 0)
+			disp_unidadese    : OUT STD_LOGIC_VECTOR (6 downto 0);
+			disp_decenase 	   : OUT STD_LOGIC_VECTOR (6 downto 0)
 			);
 			
 END ENTITY;
 
 architecture procedimiento of espacio_libre is
 
-			SIGNAL clk_1HZ		   : STD_LOGIC := '0';
-			SIGNAL s_unidades    : INTEGER range 0 to 9;
-			SIGNAL s_decenas     : INTEGER range 0 to 9;
-			SIGNAL dec_unidades  : STD_LOGIC_VECTOR (3 downto 0);
-			SIGNAL dec_decenas   : STD_LOGIC_VECTOR (3 downto 0);
-			SIGNAL s_conteobase  : INTEGER range 0 to 35;
-			SIGNAL s_conteoextra : INTEGER range 0 to 99;
+			SIGNAL clk_1HZ		    : STD_LOGIC := '0';
+			SIGNAL s_unidadesb    : INTEGER range 0 to 9;
+			SIGNAL s_decenasb     : INTEGER range 0 to 9;
+			SIGNAL s_unidadese    : INTEGER range 0 to 9;
+			SIGNAL s_decenase     : INTEGER range 0 to 9;
+			SIGNAL dec_unidadesb  : STD_LOGIC_VECTOR (3 downto 0);
+			SIGNAL dec_decenasb   : STD_LOGIC_VECTOR (3 downto 0);
+			SIGNAL dec_unidadese  : STD_LOGIC_VECTOR (3 downto 0);
+			SIGNAL dec_decenase   : STD_LOGIC_VECTOR (3 downto 0);
+			SIGNAL s_conteobase   : INTEGER range 0 to 35;
+			SIGNAL s_conteoextra  : INTEGER range 0 to 99;
 			
 			U_divisor_frecuencia : divisor_frecuencia
 					GENERIC MAP(
@@ -53,10 +59,72 @@ architecture procedimiento of espacio_libre is
 								conteo_extra => s_conteoextra
 							);
 							
-			U_union_contadores : union_contadores
+			U_contador_base : union_contadores
 					PORT MAP(
-								clk => clk_1HZ,
-								reset => btn_reset,
-								
+								numero_entrada => s_conteobase
+								unidades => s_unidadesb,
+								decenas => s_decenasb
+							);
+							
+			U_contador_extra : union_contadores
+					PORT MAP(
+								numero_entrada => s_conteoextra
+								unidades => s_unidadese,
+								decenas => s_decenase
+							);
+							
+			U_DEC_BCD_conteobase_unidades : DEC_BCD
+										PORT MAP(
+													x => s_unidadesb,
+													y => dec_unidadesb
+												);
+												
+			U_DEC_BCD_conteobase_decenas : DEC_BCD
+										PORT MAP(
+													x => s_decenasb,
+													y => dec_decenasb
+												);
+												
+			U_DEC_BCD_conteoextra_unidades : DEC_BCD
+										PORT MAP(
+													x => s_unidadese,
+													y => dec_unidadese
+												);
+												
+			U_DEC_BCD_conteoextra_decenas : DEC_BCD
+										PORT MAP(
+													x => s_decenase,
+													y => dec_decenase
+												);
+												
+			U_7SEG_conteobase_unidades : BCD_7SEG
+										PORT MAP(
+													A => dec_unidadesb,
+													B => disp_unidadesb
+												);
+												
+			U_7SEG_conteobase_decenas : BCD_7SEG
+										PORT MAP(
+													A => dec_decenasb,
+													B => disp_decenasb
+												);
+												
+			U_7SEG_conteoextra_unidades : BCD_7SEG
+										PORT MAP(
+													A => dec_unidadese,
+													B => disp_unidadese
+												);
+												
+			U_7SEG_conteoextra_decenas : BCD_7SEG
+										PORT MAP(
+													A => dec_decenasb,
+													B => disp_decenasb
+												);
+												
+end procedimiento;
+										
+			
+												
+			
 								
 			
