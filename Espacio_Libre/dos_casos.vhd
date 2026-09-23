@@ -3,6 +3,7 @@ LIBRARY IEEE;
 USE IEEE.STD_LOGIC_ARITH.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
 USE work.espacio_libre_pkg.ALL;
 
 entity dos_casos is
@@ -15,7 +16,11 @@ entity dos_casos is
 				led_alarma 		  : OUT STD_LOGIC;
 				led_felicitacion : OUT STD_LOGIC;
 				conteo_base 	  : OUT integer range 0 to 35;
-				conteo_extra 	  : OUT integer range 0 to 99
+				conteo_extra 	  : OUT integer range 0 to 99;
+				unidades_base    : OUT STD_LOGIC_VECTOR (3 downto 0);
+				decenas_base     : OUT STD_LOGIC_VECTOR (3 downto 0);
+				unidades_extra   : OUT STD_LOGIC_VECTOR (3 downto 0);
+				decenas_extra    : OUT STD_LOGIC_VECTOR (3 downto 0)
 				
 			);
 			
@@ -92,6 +97,11 @@ begin
     conteo_base  <= cuenta_35;
     conteo_extra <= cuenta_ex;
 	 led_felicitacion <= felicitacion_reg;
+	 
+	 unidades_base <= STD_LOGIC_VECTOR(to_unsigned(cuenta_35 mod 10, 4));
+	 decenas_base <= STD_LOGIC_VECTOR (to_unsigned(cuenta_35 / 10, 4));
+	 unidades_extra <= STD_LOGIC_VECTOR(to_unsigned(cuenta_35 mod 10, 4));
+	 decenas_extra <= STD_LOGIC_VECTOR(to_unsigned(cuenta_35 / 10, 4));
 
 end mixta;
 
