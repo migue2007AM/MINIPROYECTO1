@@ -1,8 +1,10 @@
 LIBRARY IEEE;
+LIBRARY WORK;
 
 USE IEEE.STD_LOGIC_ARITH.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
+use work.espacio_libre_pkg.ALL;
 
 ENTITY espacio_libre is
 	
@@ -15,7 +17,7 @@ ENTITY espacio_libre is
 			led_alarma 		   : OUT STD_LOGIC;
 			led_felicitacion  : OUT STD_LOGIC;
 			disp_unidadesb    : OUT STD_LOGIC_VECTOR (6 downto 0);
-			disp_decenasb 	   : OUT STD_LOGIC_VECTOR (6 downto 0)
+			disp_decenasb 	   : OUT STD_LOGIC_VECTOR (6 downto 0);
 			disp_unidadese    : OUT STD_LOGIC_VECTOR (6 downto 0);
 			disp_decenase 	   : OUT STD_LOGIC_VECTOR (6 downto 0)
 			);
@@ -36,17 +38,19 @@ architecture procedimiento of espacio_libre is
 			SIGNAL s_conteobase   : INTEGER range 0 to 35;
 			SIGNAL s_conteoextra  : INTEGER range 0 to 99;
 			
-			U_divisor_frecuencia : divisor_frecuencia
+			
+begin
+			U_divisor_frecuencia : entity work.divisor_frecuencia
 					GENERIC MAP(
 									FININ => 50000000,
 									FOUT => 1
-									);
+									)
 					
 					PORT MAP(
 								clk_in => clk_fpga,
 								reset => btn_reset,
 								clk_out => clk_1HZ
-							);
+							 );
 							
 			U_dos_casos : dos_casos
 					PORT MAP(
@@ -61,14 +65,14 @@ architecture procedimiento of espacio_libre is
 							
 			U_contador_base : union_contadores
 					PORT MAP(
-								numero_entrada => s_conteobase
+								numero_entrada => s_conteobase,
 								unidades => s_unidadesb,
 								decenas => s_decenasb
 							);
 							
 			U_contador_extra : union_contadores
 					PORT MAP(
-								numero_entrada => s_conteoextra
+								numero_entrada => s_conteoextra,
 								unidades => s_unidadese,
 								decenas => s_decenase
 							);
