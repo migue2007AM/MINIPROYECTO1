@@ -100,8 +100,8 @@ begin
 	 
 	 unidades_base <= STD_LOGIC_VECTOR(to_unsigned(cuenta_35 mod 10, 4));
 	 decenas_base <= STD_LOGIC_VECTOR (to_unsigned(cuenta_35 / 10, 4));
-	 unidades_extra <= STD_LOGIC_VECTOR(to_unsigned(cuenta_35 mod 10, 4));
-	 decenas_extra <= STD_LOGIC_VECTOR(to_unsigned(cuenta_35 / 10, 4));
+	 unidades_extra <= STD_LOGIC_VECTOR(to_unsigned(cuenta_ex mod 10, 4));
+	 decenas_extra <= STD_LOGIC_VECTOR(to_unsigned(cuenta_ex / 10, 4));
 
 end mixta;
 
