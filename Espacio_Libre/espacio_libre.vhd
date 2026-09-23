@@ -60,46 +60,13 @@ begin
 								led_alarma => led_alarma,
 								led_felicitacion => led_felicitacion,
 								conteo_base => s_conteobase,
-								conteo_extra => s_conteoextra
+								conteo_extra => s_conteoextra,
+								unidades_base => dec_unidadesb,
+								decenas_base => dec_decenasb,
+								unidades_extra => dec_unidadese,
+								decenas_extra => dec_decenase
 							);
 							
-			U_contador_base : union_contadores
-					PORT MAP(
-								numero_entrada => s_conteobase,
-								unidades => s_unidadesb,
-								decenas => s_decenasb
-							);
-							
-			U_contador_extra : union_contadores
-					PORT MAP(
-								numero_entrada => s_conteoextra,
-								unidades => s_unidadese,
-								decenas => s_decenase
-							);
-							
-			U_DEC_BCD_conteobase_unidades : DEC_BCD
-										PORT MAP(
-													x => s_unidadesb,
-													y => dec_unidadesb
-												);
-												
-			U_DEC_BCD_conteobase_decenas : DEC_BCD
-										PORT MAP(
-													x => s_decenasb,
-													y => dec_decenasb
-												);
-												
-			U_DEC_BCD_conteoextra_unidades : DEC_BCD
-										PORT MAP(
-													x => s_unidadese,
-													y => dec_unidadese
-												);
-												
-			U_DEC_BCD_conteoextra_decenas : DEC_BCD
-										PORT MAP(
-													x => s_decenase,
-													y => dec_decenase
-												);
 												
 			U_7SEG_conteobase_unidades : BCD_7SEG
 										PORT MAP(
@@ -121,8 +88,8 @@ begin
 												
 			U_7SEG_conteoextra_decenas : BCD_7SEG
 										PORT MAP(
-													A => dec_decenasb,
-													B => disp_decenasb
+													A => dec_decenase,
+													B => disp_decenase
 												);
 												
 end procedimiento;
