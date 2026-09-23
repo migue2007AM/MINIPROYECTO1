@@ -12,9 +12,7 @@ entity union_contadores is
 				enable   : in STD_LOGIC;
 				
 				unidades : out integer range 0 to 9;
-				decenas  : out integer range 0 to 9;
-				centenas : out integer range 0 to 9;
-				miles 	: out integer range 0 to 9
+				decenas  : out integer range 0 to 9
 				);
 			
 end entity;
@@ -23,7 +21,6 @@ architecture conteo of union_contadores is
 
 		signal carry_uni : STD_LOGIC;
 		signal carry_dec : STD_LOGIC;
-		signal carry_cen : STD_LOGIC;
 		
 		COMPONENT contador_individual is
 		
@@ -55,29 +52,10 @@ architecture conteo of union_contadores is
 								reset 	 => reset,
 								enable 	 => carry_uni,
 								
-								carry_out => carry_dec,
+								carry_out => open,
 								cuenta 	 => decimas
 								);
 								
-				U_CENTENAS : contador_individual
-					port map(
-								clk       => clk,
-								reset     => reset,
-								enable 	 => carry_dec,
-								
-								carry_out => carry_cen,
-								cuenta 	 => centenas
-								);
-								
-				U_MILESIMAS : contador_individual
-					port map(
-								clk       => clk,
-								reset 	 => reset,
-								enable 	 => carry_cen,
-								
-								carry_out => open, --asignacion vacia
-								cuenta 	 => miles
-								);
 					
 end conteo;
 
