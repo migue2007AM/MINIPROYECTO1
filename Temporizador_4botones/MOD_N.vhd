@@ -22,3 +22,34 @@ END ENTITY;
 
 ARCHITECTURE conteo of MOD_N is
 
+	SIGNAL conteo : INTEGER RANGE 0 TO limit;
+	
+begin 
+		
+		PROCESS(clk, reset)
+		
+			if reset = '1' then
+				cuenta = 0;
+				
+				if rising_edge(clk) then 
+				
+					enable = '1';
+					
+					if enable = '1' then
+						
+						if conteo = limit then
+							conteo = 0;
+						
+						then 
+							conteo <= conteo + 1;
+							
+						end if;
+					
+					end if;
+				
+				end if;
+			
+			end if;
+			
+
+
