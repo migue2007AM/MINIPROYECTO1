@@ -42,7 +42,7 @@ architecture procedimiento of espacio_libre is
 begin
 			U_divisor_frecuencia : entity work.divisor_frecuencia
 					GENERIC MAP(
-									FININ => 50000000,
+									FININ => 49999999,
 									FOUT => 1
 									)
 					

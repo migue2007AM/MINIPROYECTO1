@@ -9,7 +9,7 @@ package espacio_libre_pkg is
 	COMPONENT divisor_frecuecia is
 			
 			GENERIC (
-			FININ : INTEGER := 50000000; -- Frecuencia del oscilador de la FPGA (50 MHz)
+			FININ : INTEGER := 49999999; -- Frecuencia del oscilador de la FPGA (50 MHz)
 			FOUT  : INTEGER := 1         -- Frecuencia deseada para el conteo (1 Hz)
 			);
 
