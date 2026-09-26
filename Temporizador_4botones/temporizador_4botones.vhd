@@ -24,7 +24,7 @@ END ENTITY;
 
 ARCHITECTURE conteo OF temporizador_4botones IS
 	
-	SIGNAL running : STD_LOGIC;
+	SIGNAL running : STD_LOGIC := '0';
 	SIGNAL clk_1HZ : STD_LOGIC;
 	SIGNAL carry1  : STD_LOGIC;
 	SIGNAL carry2  : STD_LOGIC;
@@ -36,10 +36,10 @@ begin
 		if rising_edge(clk) then
 			if reset = '1' then
 				running <= '0';
-			elsif start = '1' then
-				running <= '1';
-			elsif stop = '1' then
-				running <= '0';
+			--elsif start = '1' then
+				--running <= '1';
+			--elsif stop = '1' then
+				--running <= '0';
 			end if;
 		end if;
 	end process;
@@ -90,7 +90,7 @@ begin
 					seg7_out => disp_min
 				);
 				
-	disp_punto <= clk;
+	disp_punto <= clk_1HZ;
 				
 END conteo;
 
