@@ -21,7 +21,7 @@ END ENTITY;
 
 ARCHITECTURE conteo of MOD_N is
 
-	SIGNAL conteo : INTEGER RANGE 0 TO limit;
+	SIGNAL conteo : INTEGER RANGE 0 TO 9 := 0;
 	
 begin 
 		
