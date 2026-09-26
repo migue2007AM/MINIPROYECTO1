@@ -1,17 +1,17 @@
-LIseg7_outRARY IEEE;
+LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 USE IEEE.STD_LOGIC_ARITH.ALL;
 
 ENTITY MOD_N IS
 		GENERIC(
-					limit : INTEGER -- esta entrada recibe el limite de conteo que se quiere dependiendo la situacion
+					limit : INTEGER := 9 -- esta entrada recibe el limite de conteo que se quiere dependiendo la situacion
 				);
 				
 		PORT(
 				clk      	 	 : IN STD_LOGIC; -- esta entrada recibe la señal de reloj del divisor de frecuencia
 				reset    		 : IN STD_LOGIC; -- esta entrada si es '1' el sistema se reinicia, en '0' no se reinicia
-				enaseg7_outle   : IN STD_LOGIC; -- esta entrada se encarga de dar luz verde para iniciar el conteo
+				enable   		 : IN STD_LOGIC; -- esta entrada se encarga de dar luz verde para iniciar el conteo
 				running  		 : IN STD_LOGIC; -- esta entrada lo que hace es recordar la señal que envio el boton pulsado, sea start o stop, esto soluciona el problema de no mantener presionado el boton 
 				
 				carry    		 : OUT STD_LOGIC; -- esta salida sirve para dar luz verde pero a otro MOD_N
@@ -24,37 +24,37 @@ ARCHITECTURE conteo of MOD_N is
 
 	SIGNAL conteo : INTEGER RANGE 0 TO limit;
 	
-bgin 
+begin 
 		
 		PROCESS(clk, reset)
 		
-			if reset = '1' then
-				cuenta <= 0;
-				
-			elsif rising_edge(clk) then 
-				enable <= '1';
-				
-				if enable = '1' then
+			begin
+				if reset = '1' then
+					conteo <= 0;
 					
-					if conteo = limit then
-						conteo <= 0;
+				elsif rising_edge(clk) then 
 					
-					else 
-						conteo <= conteo + 1;
+					if enable = '1' then
 						
+						if conteo = limit then
+							conteo <= 0;
+						
+						else 
+							conteo <= conteo + 1;
+							
+						end if;
+					
 					end if;
 				
 				end if;
 			
-			end if;
-			
 		end PROCESS;
 		
-carry <= '1' when (cuenta = limit and enable = '1') else '0';
+carry <= '1' when (conteo = limit and enable = '1') else '0';
 
-		PROCESS(cuenta)
+		PROCESS(conteo)
 			begin
-			CASE cuenta is
+			CASE conteo is
 				when 0 => seg7_out <= "0000001";
 				when 1 => seg7_out <= "1001111";
 				when 2 => seg7_out <= "0010010";
