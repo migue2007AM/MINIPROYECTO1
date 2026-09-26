@@ -23,7 +23,7 @@ END ENTITY;
 
 ARCHITECTURE conteo OF temporizador_4botones IS
 
-	SIGNAL running : STD_LOGIC := 0;
+	SIGNAL running : STD_LOGIC := '0';
 	SIGNAL clk_1HZ : STD_LOGIC;
 	SIGNAL carry1  : STD_LOGIC;
 	SIGNAL carry2  : STD_LOGIC;
