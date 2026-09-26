@@ -31,9 +31,9 @@ ARCHITECTURE conteo OF temporizador_4botones IS
 
 begin	
 
-	process(clk)
+	process(clk_1HZ)
 	begin
-		if rising_edge(clk) then
+		if rising_edge(clk_1HZ) then
 			if reset = '1' then
 				running <= '0';
 			elsif start = '1' then
