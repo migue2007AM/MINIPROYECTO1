@@ -15,14 +15,15 @@ ENTITY temporizador_4botones is
 			
 			disp_sec1 : OUT STD_LOGIC_VECTOR(6 downto 0);
 			disp_sec2 : OUT STD_LOGIC_VECTOR(6 downto 0);
-			disp_min : OUT STD_LOGIC_VECTOR(6 downto 0)
+			disp_min : OUT STD_LOGIC_VECTOR(6 downto 0);
+			disp_punto : OUT STD_LOGIC
 			
 		);
 		
 END ENTITY;
 
 ARCHITECTURE conteo OF temporizador_4botones IS
-
+	
 	SIGNAL running : STD_LOGIC := '0';
 	SIGNAL clk_1HZ : STD_LOGIC;
 	SIGNAL carry1  : STD_LOGIC;
@@ -88,6 +89,8 @@ begin
 					carry => open,
 					seg7_out => disp_min
 				);
+				
+	disp_punto <= clk_1HZ;
 				
 END conteo;
 
