@@ -28,22 +28,16 @@ ARCHITECTURE conteo OF temporizador_4botones IS
 	SIGNAL clk_1HZ : STD_LOGIC;
 	SIGNAL carry1  : STD_LOGIC;
 	SIGNAL carry2  : STD_LOGIC;
-	SIGNAL reset_invertido :STD_LOGIC;
-	SIGNAL start_btn : STD_LOGIC;
-	SIGNAL stop_btn : STD_LOGIC;
 
 begin	
-	reset_invertido <= not reset;
-	start_btn <= not start;
-	stop_btn <= not stop;
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if reset = '1' then
-				running <= '0';
-			elsif start_btn = '1' then
+			if start = '0' then
 				running <= '1';
-			elsif stop_btn = '1' then
+			elsif stop = '0' then
+				running <= '0';
+			elsif reset = '0' then
 				running <= '0';
 			end if;
 		end if;
@@ -64,7 +58,7 @@ begin
 	U_UNIDADES_SEC : MOD_N
 		PORT MAP(
 					clk => clk_1HZ,
-					reset => reset_invertido,
+					reset => reset,
 					enable => running,
 					
 					carry => carry1,
@@ -78,7 +72,7 @@ begin
 		
 		PORT MAP(
 					clk => clk_1HZ,
-					reset => reset_invertido,
+					reset => reset,
 					enable => carry1,
 					
 					carry => carry2,
@@ -88,14 +82,14 @@ begin
 	U_UNIDADES_MIN : MOD_N
 		PORT MAP(
 					clk => clk_1HZ,
-					reset => reset_invertido,
+					reset => reset,
 					enable => carry2,
 					
 					carry => open,
 					seg7_out => disp_min
 				);
 				
-	disp_punto <= running;
+	disp_punto <= clk_1HZ;
 				
 END conteo;
 

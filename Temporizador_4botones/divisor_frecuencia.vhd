@@ -31,7 +31,7 @@ BEGIN
 
     BEGIN
 
-        IF reset = '1' THEN
+        IF reset = '0' THEN
 
             contador <= 0;
             clk_aux <= '0';

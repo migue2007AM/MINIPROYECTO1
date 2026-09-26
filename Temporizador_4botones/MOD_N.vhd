@@ -28,7 +28,7 @@ begin
 		PROCESS(clk, reset)
 		
 			begin
-				if reset = '1' then
+				if reset = '0' then
 					conteo <= 0;
 					
 				elsif rising_edge(clk) then 
