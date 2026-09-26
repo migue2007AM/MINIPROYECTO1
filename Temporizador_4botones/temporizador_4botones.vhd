@@ -34,10 +34,10 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if reset = '1' then
-				running <= '0';
-			--elsif start = '1' then
-				--running <= '1';
+			--if reset = '1' then
+				--running <= '0';
+			elsif start = '1' then
+				running <= '1';
 			--elsif stop = '1' then
 				--running <= '0';
 			end if;
