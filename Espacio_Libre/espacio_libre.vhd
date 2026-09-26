@@ -26,7 +26,7 @@ END ENTITY;
 
 architecture procedimiento of espacio_libre is
 
-			SIGNAL clk_1HZ		    : STD_LOGIC := '0';
+			SIGNAL clk_1HZ		    : STD_LOGIC;
 			SIGNAL s_unidadesb    : INTEGER range 0 to 9;
 			SIGNAL s_decenasb     : INTEGER range 0 to 9;
 			SIGNAL s_unidadese    : INTEGER range 0 to 9;
